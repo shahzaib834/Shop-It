@@ -4,7 +4,8 @@
   "description": "E-Commerce Website( Almost Full Flegded)",
   "main": "server.js",
   "scripts": {
-    "backend": "nodemon backend/server.js"
+    "backend": "nodemon backend/server.js",
+    "seeder": "node backend/data/seeder.js"
   },
   "repository": {
     "type": "git",

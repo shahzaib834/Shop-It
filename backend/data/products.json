@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Portable External Hard",
+    "description": "Seagate Portable 2TB External Hard Drive Portable HDD – USB 3.0 for PC, Mac, PlayStation, & Xbox - 1-Year Rescue Service (STGX2000400) 1- Easily store and access 2TB to content on the go with the Seagate Portable Drive, a USB external hard drive 2- Designed to work with Windows or Mac computers, this external hard drive makes backup a snap just drag and drop3- To get set up, connect the portable hard drive to a computer for automatic recognition no software required 4- This USB drive provides plug and play simplicity with the included 18 inch USB 3.0 cable",
+    "price": "61.99",
+    "images": [{ "public_id": "4", "url": "5" }],
+    "category": "Accessories",
+    "seller": "Seagate",
+    "stock": 55
+  },
+  {
+    "name": "Logitech Wireless Combo MK270",
+    "description": "Reliable Plug and Play: The USB receiver provides a reliable wireless connection up to 33 ft (1), so you can forget about drop-outs and delays and you can take it wherever you use your computer 1- Type in Comfort: The design of this keyboard creates a comfortable typing experience thanks to the low-profile, quiet keys and standard layout with full-size F-keys, number pad, and arrow keys 2- Durable and Resilient: This full-size wireless keyboard features a spill-resistant design (2), durable keys and sturdy tilt legs with adjustable height3- Long Battery Life: MK270 combo features a 36-month keyboard and 12-month mouse battery life (3), along with on/off switches allowing you to go months without the hassle of changing batteries4- Easy to Use: This wireless keyboard and mouse combo features 8 multimedia hotkeys for instant access to the Internet, email, play/pause, and volume so you can easily check out your favorite sites4- Comfortable Mouse: This compact wireless mouse is designed to be equally comfortable for both left- and right-handed users, plus its smooth cursor control allows easy navigation on most surfaces5- Favorite Wireless Combo: MK270 brings together familiar typing, wireless freedom, and long battery life; no wonder this is the world's top-selling combo(4)6- Upgrade to Logitech MK540 Combo: Experience increased comfort with the MK540 combo, featuring scooped keys, palm rest, full-size mouse with soft rubber grips, and customizable shortcuts",
+    "price": "61.99",
+    "images": [{ "public_id": "4", "url": "5" }],
+    "category": "Accessories",
+    "seller": "Logitech",
+    "stock": 150
+  },
+
+  {
+    "name": "Computer Monitor with 23.8-Inch IPS Display (1080p)",
+    "description": "1- OUTSTANDING VISUALS – This FHD display with IPS technology gives you brilliant visuals and unforgettable quality; with a maximum resolution of 1920 x 1080 at 75 Hz, you’ll experience the image accuracy and wide-viewing spectrums of premium tablets and mobile devices2- MORE SCREEN, LESS SPACE – Enjoy more desk space than you thought possible with an attractive and ultra-slim design3- PANORAMIC VIEWING – Vibrant detail from practically any position with consistent color and image clarity maintained across an ultra-wide 178° horizontal and vertical viewing angles4- MICRO-EDGE DISPLAY – With virtually no bezel encircling the display on three sides, an ultra-wide viewing experience provides for seamless multi-monitor setups5- EASY CONNECTIVITY – Get the picture quality you’ve been looking for without the additional dongles; easily connect to your PC, gaming console, and peripherals for big-screen entertainment with a 6- broad range of ports, including HDMI, DisplayPort, and VGA ports",
+    "price": "52.10",
+    "images": [{ "public_id": "4", "url": "5" }],
+    "category": "Accessories",
+    "seller": "HP",
+    "stock": 15
+  },
+
+  {
+    "name": "Apple AirPods (2nd Generation)",
+    "description": "1- Quick access to Siri by saying “ Hey Siri ”2- More than 24 hours total listening time with the Charging Case3- Effortless setup, in-ear detection, and automatic switching for a magical experience4- Easily share audio between two sets of AirPods on your iPhone, iPad, iPod touch, or Apple TV",
+    "price": "10.00",
+    "images": [{ "public_id": "4", "url": "5" }],
+    "category": "Accessories",
+    "seller": "Apple",
+    "stock": 350
+  },
+
+  {
+    "name": "Lash Princess False Lash Effect Mascara | Gluten & Cruelty Free",
+    "description": "1- If you receive this mascara UNWRAPPED, it did not come from essence cosmetics.2- NO FALSIES NEEDED! Lash Princess False Lash Mascara defines and separates lashes while achieving a bold look.3- DRAMATIC VOLUME: the conic shape fiber brush delivers dramatic volume and sculpted length WITHOUT clumps or globs.4- LASTS ALL DAY: go about your day free from flaking & fading! This mascara does not flake, fade, or wear, making it a perfect all-day, longlasting mascara.5- CRUELTY FREE: essence cosmetics is certified and acknowledged by PETA as a cruelty-free brand. We do not test any of our products on animals.",
+    "price": "6.99",
+    "images": [{ "public_id": "4", "url": "5" }],
+    "category": "Beauty/Health",
+    "seller": "Essence",
+    "stock": 400
+  }
+]
