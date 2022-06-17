@@ -57,7 +57,7 @@ const productSchema = new mongoose.Schema({
   stock: {
     type: Number,
     required: [true, 'Please enter product stock'],
-    minLength: [5, 'Minimum Stock cannot be less than 5 units'],
+    minlength: [5, 'Minimum Stock cannot be less than 5 units'],
   },
   numOfReviews: {
     type: Number,
