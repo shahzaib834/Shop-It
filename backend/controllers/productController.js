@@ -26,6 +26,8 @@ const getProducts = asyncHandler(async (req, res) => {
 // @METHOD POST
 const addProduct = async (req, res) => {
   try {
+    req.body.user = req.user.id;
+
     const product = req.body;
 
     await Product.create(product);

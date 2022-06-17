@@ -1,7 +1,4 @@
 const User = require('../models/user');
-const dotenv = require('dotenv');
-
-dotenv.config();
 
 const registerUser = async (req, res) => {
   try {
@@ -38,6 +35,7 @@ const registerUser = async (req, res) => {
   }
 };
 
+// App crashing when you give wrong credentials
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -58,11 +56,11 @@ const loginUser = async (req, res) => {
       });
     }
 
-    const isPasswordMatched = user.matchPassword(password);
+    const isPasswordMatched = await user.matchPassword(password);
 
     if (!isPasswordMatched) {
       res.status(401).json({
-        success: fail,
+        success: false,
         message: 'Invalid email or password',
       });
     }
@@ -89,4 +87,80 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, loginUser };
+const logout = async (req, res) => {
+  res.cookie('token', null, {
+    expires: new Date(Date.now()),
+    httpOnly: true,
+  });
+
+  res.status(200).json({
+    success: true,
+    message: 'Logged out successfully',
+  });
+};
+
+const getMyProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+
+    res.status(200).json({
+      success: true,
+      user,
+    });
+  } catch (err) {
+    res.status(400).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+// App crashing on every error
+const changePassword = async (req, res) => {
+  try {
+    const { oldPassword, newPassword, confirmPassword } = req.body;
+
+    if (newPassword != confirmPassword) {
+      res.status(400).json({
+        success: false,
+        message: 'New password and confirm password not matched',
+      });
+    }
+
+    const user = await User.findById(req.user.id).select('+password');
+
+    // Check previous password
+    const isMatched = await user.matchPassword(oldPassword);
+
+    if (!isMatched) {
+      res.status(400).json({
+        success: false,
+        message: 'Wrong Password',
+      });
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    const token = user.generateWebToken();
+
+    res.status(200).json({
+      success: true,
+      message: 'Password updated successfully',
+      token,
+    });
+  } catch (err) {
+    res.status(400).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+module.exports = {
+  registerUser,
+  loginUser,
+  logout,
+  getMyProfile,
+  changePassword,
+};
