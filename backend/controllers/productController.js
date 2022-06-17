@@ -1,22 +1,13 @@
 const Product = require('../models/product');
 const asyncHandler = require('express-async-handler');
+const { filter } = require('../utils/filter');
 
 // Get All Products And product with keywords.
 // For the time being we are only filtering by name.
 const getProducts = asyncHandler(async (req, res) => {
   try {
-    const keyword = req.query.keyword
-      ? {
-          name: {
-            $regex: req.query.keyword,
-            $options: 'i',
-          },
-        }
-      : {};
-
-    const products = await Product.find({ ...keyword });
-
-    console.log(keyword);
+    // Filter is the method which filters the query and return filtered results.
+    const products = await filter(Product.find(), req.query);
 
     res.status(201).json({
       success: 'pass',
