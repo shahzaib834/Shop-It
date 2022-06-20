@@ -5,9 +5,14 @@ const {
   logout,
   getMyProfile,
   changePassword,
+  updateProfile,
+  getAllUsers,
+  getUser,
+  updateUser,
+  deleteUser,
 } = require('../controllers/authenticationController');
 
-const { protect } = require('../middleware/authMiddleware');
+const { protect, authorizeRoles } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
@@ -25,5 +30,19 @@ router.route('/me').get(protect, getMyProfile);
 
 // Update Password
 router.route('/password/update').put(protect, changePassword);
+
+//Update Profile
+router.route('/update/profile').put(protect, updateProfile);
+
+// Get All Users -- ADMIN ROUTE
+router.route('/allUsers').get(protect, authorizeRoles('admin'), getAllUsers);
+
+// ADMIN ROUTE
+// Get Specific User....Update User....Delete User
+router
+  .route('/:id')
+  .get(protect, authorizeRoles('admin'), getUser)
+  .put(protect, authorizeRoles('admin'), updateUser)
+  .delete(protect, authorizeRoles('admin'), deleteUser);
 
 module.exports = router;

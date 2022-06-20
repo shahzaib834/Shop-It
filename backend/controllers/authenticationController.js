@@ -4,6 +4,15 @@ const registerUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
+    if (!name || !email || !password) {
+      res.status(400).json({
+        success: false,
+        message: 'Please provide name,email and password to continue',
+      });
+
+      return;
+    }
+
     const user = await User.create({
       name,
       email,
@@ -35,7 +44,6 @@ const registerUser = async (req, res) => {
   }
 };
 
-// App crashing when you give wrong credentials
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -45,6 +53,8 @@ const loginUser = async (req, res) => {
         success: false,
         message: 'Please enter email and password',
       });
+
+      return;
     }
 
     const user = await User.findOne({ email }).select('+password');
@@ -54,6 +64,8 @@ const loginUser = async (req, res) => {
         success: false,
         message: 'Invalid email or password',
       });
+
+      return;
     }
 
     const isPasswordMatched = await user.matchPassword(password);
@@ -63,6 +75,8 @@ const loginUser = async (req, res) => {
         success: false,
         message: 'Invalid email or password',
       });
+
+      return;
     }
 
     const token = user.generateWebToken();
@@ -115,7 +129,6 @@ const getMyProfile = async (req, res) => {
   }
 };
 
-// App crashing on every error
 const changePassword = async (req, res) => {
   try {
     const { oldPassword, newPassword, confirmPassword } = req.body;
@@ -125,6 +138,8 @@ const changePassword = async (req, res) => {
         success: false,
         message: 'New password and confirm password not matched',
       });
+
+      return;
     }
 
     const user = await User.findById(req.user.id).select('+password');
@@ -137,6 +152,8 @@ const changePassword = async (req, res) => {
         success: false,
         message: 'Wrong Password',
       });
+
+      return;
     }
 
     user.password = newPassword;
@@ -157,10 +174,128 @@ const changePassword = async (req, res) => {
   }
 };
 
+const updateProfile = async (req, res) => {
+  // Update Avatar TODO
+  try {
+    const user = await User.findByIdAndUpdate(req.user.id, req.body, {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    });
+
+    res.status(200).json({
+      success: true,
+      message: 'Updated Succesfully',
+      user,
+    });
+  } catch (err) {
+    res.status(400).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+
+    res.status(200).json({
+      success: true,
+      Count: users.length,
+      users,
+    });
+  } catch (err) {
+    res.status(400).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+const getUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+      res.status(400).json({
+        success: false,
+        message: 'User not found. Check your id',
+      });
+
+      return;
+    }
+
+    res.status(200).json({
+      success: true,
+      user,
+    });
+  } catch (err) {
+    res.status(400).json({
+      success: true,
+      message: err.message,
+    });
+  }
+};
+
+const updateUser = async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    });
+
+    res.status(200).json({
+      success: true,
+      message: 'Updated Succesfully',
+    });
+  } catch (err) {
+    res.status(400).json({
+      success: true,
+      message: err.message,
+    });
+  }
+};
+
+const deleteUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+      res.status(404).json({
+        success: false,
+        message: 'User not found',
+      });
+
+      return;
+    }
+
+    // TODO - Remove avatar from cludinary
+
+    await user.remove();
+
+    res.status(200).json({
+      success: true,
+      message: 'Deleted Succesfully',
+    });
+  } catch (err) {
+    res.status(400).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
   logout,
   getMyProfile,
   changePassword,
+  updateProfile,
+  getAllUsers,
+  getUser,
+  updateUser,
+  deleteUser,
 };

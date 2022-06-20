@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const products = require('./routes/product');
 const users = require('./routes/user');
+const order = require('./routes/order');
 const connectDB = require('./config/db');
 const cookieParser = require('cookie-parser');
 
@@ -19,6 +20,7 @@ app.use(cookieParser());
 
 app.use('/api/products', products);
 app.use('/api/users', users);
+app.use('/api/order', order);
 
 PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
