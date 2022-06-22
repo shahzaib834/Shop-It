@@ -1,14 +1,18 @@
 import React from 'react';
 
 import {
-  Nav,
   Navbar,
   Container,
   Form,
-  FormControl,
   Button,
   InputGroup,
+  Image,
 } from 'react-bootstrap';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+
+import logo from '../utils/shopit_logo.png';
 
 const Header = () => {
   return (
@@ -26,21 +30,21 @@ const Header = () => {
               width: '100%',
               display: 'flex',
               justifyContent: 'space-between',
+              alignItems: 'center',
             }}
           >
-            <Navbar.Brand>Shop-it</Navbar.Brand>
+            <Image src={logo} />
 
             <div>
-              <InputGroup>
+              <InputGroup style={{ width: '40rem' }}>
                 <Form.Control type='search' placeholder='Enter Products ...' />
                 <Button variant='warning' size='sm' id='button-addon2'>
-                  Button
+                  <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </Button>
               </InputGroup>
             </div>
 
             <div>
-              <Navbar.Toggle aria-controls='basic-navbar-nav' />
               <Navbar.Collapse id='basic-navbar-nav'>
                 <div
                   style={{

@@ -29,7 +29,7 @@ const filter = (Product, query) => {
   );
 
   // Pagination Settings
-  const resultPerPage = 4;
+  const resultPerPage = 8;
   const currentPage = Number(query.page || 1);
   const skip = resultPerPage * (currentPage - 1);
 
