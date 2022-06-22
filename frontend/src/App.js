@@ -2,6 +2,7 @@ import './App.css';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomeScreen from './Screens/HomeScreen';
+import ProductScreen from './Screens/ProductScreen';
 
 import { Container } from 'react-bootstrap';
 
@@ -15,6 +16,7 @@ const App = () => {
       <Container>
         <Routes>
           <Route index element={<HomeScreen />} />
+          <Route path={'/products/:id'} element={<ProductScreen />} />
         </Routes>
       </Container>
       <Footer />

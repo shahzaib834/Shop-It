@@ -15,7 +15,7 @@ const Product = ({ product }) => {
       <Ratings numReviews={product.numOfReviews} ratings={product.ratings} />
       <Card.Text>$ {product.price}</Card.Text>
 
-      <Link to={`/products/${product._id}`}>
+      <Link to={`products/${product._id}`}>
         <Button
           size='lg'
           style={{
