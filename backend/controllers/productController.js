@@ -7,13 +7,12 @@ const { filter } = require('../utils/filter');
 const getProducts = asyncHandler(async (req, res) => {
   try {
     const resPerPage = 4;
-    const allProducts = await Product.find();
     // Filter is the method which filters the query and return filtered results.
     const products = await filter(Product.find(), req.query);
 
     res.status(201).json({
       success: true,
-      count: allProducts.length,
+      count: products.length,
       resPerPage,
       products,
     });

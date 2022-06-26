@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Product from '../components/Product';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, InputGroup, Form, Card } from 'react-bootstrap';
 import Pagination from 'react-js-pagination';
-
-import Range from 'rc-slider';
-import Slider from 'rc-slider';
-import 'rc-slider/assets/index.css';
 
 import { useParams } from 'react-router-dom';
 
@@ -14,14 +10,34 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getProducts } from '../store/actions/productsActions';
 
 import Loader from '../components/Loader';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 const HomeScreen = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [price, setPrice] = useState([1, 1000]);
+  const [minPrice, setMinPrice] = useState(1);
+  const [maxPrice, setMaxPrice] = useState(1000);
+  const [category, setCategory] = useState('');
+  const [ratings, setRatings] = useState(0);
 
   const { loading, products, productsCount, resPerPage } = useSelector(
     (state) => state.products
   );
+
+  const categories = [
+    'Electronics',
+    'Camera',
+    'Laptop',
+    'Accessories',
+    'Headphones',
+    'Food',
+    'Books',
+    'Clothes/Shoes',
+    'Beauty/Health',
+    'Sports',
+    'Outdoor',
+    'Home',
+  ];
 
   const dispatch = useDispatch();
   const params = useParams();
@@ -29,30 +45,177 @@ const HomeScreen = () => {
   const keyword = params.keyword;
 
   useEffect(() => {
-    console.log(price);
-    dispatch(getProducts(keyword, currentPage, price));
-  }, [dispatch, keyword, currentPage, price]);
+    dispatch(
+      getProducts(keyword, currentPage, minPrice, maxPrice, category, ratings)
+    );
+  }, [dispatch, keyword, currentPage, minPrice, maxPrice, category, ratings]);
 
   const setCurrentPageNo = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-
   return (
     <>
       {loading ? <Loader /> : <h1 className='px-4 py-2 '>LATEST PRODUCTS</h1>}
       {keyword ? (
         <Row>
           <Col sm={8} md={4} lg={3} xl={2}>
-            <Slider />
-            <Range
-              marks={{ 1: '$1', 1000: '$1000' }}
-              min={1}
-              max={1000}
-              defaultValue={[1, 1000]}
-              value={price}
-              onChange={(price) => setPrice(price)}
-              step={199}
-            />
+            <Card style={{ border: 'none' }}>
+              <Card.Title
+                style={{
+                  padding: '5px',
+                  marginLeft: '4px',
+                }}
+              >
+                Price
+              </Card.Title>
+              <InputGroup
+                className='d-flex p-2'
+                style={{
+                  flexDirection: 'column',
+                }}
+              >
+                <Form.Control
+                  style={{ width: '100%' }}
+                  type='price[lte]'
+                  placeholder='0 $'
+                  onChange={(e) => setMinPrice(e.target.value)}
+                />
+                <Form.Control
+                  style={{ width: '100%', marginTop: '5px' }}
+                  type='price[gte]'
+                  placeholder='1000 $'
+                  onChange={(e) => setMaxPrice(e.target.value)}
+                />
+              </InputGroup>
+              <hr />
+
+              <Card.Title
+                style={{
+                  padding: '5px',
+                  marginLeft: '4px',
+                }}
+              >
+                Categories
+              </Card.Title>
+
+              <div
+                style={{
+                  padding: '5px',
+                  marginLeft: '4px',
+                  cursor: 'pointer',
+                }}
+              >
+                <Row className='mx-1' onClick={() => setCategory('Camera')}>
+                  Camera
+                </Row>
+                <Row
+                  className='mx-1'
+                  onClick={() => setCategory('Accessories')}
+                >
+                  Accessorries
+                </Row>
+                <Row className='mx-1' onClick={() => setCategory('Laptop')}>
+                  Laptop
+                </Row>
+                <Row className='mx-1' onClick={() => setCategory('Food')}>
+                  Food
+                </Row>
+                <Row
+                  className='mx-1'
+                  onClick={() => setCategory('Electronics')}
+                >
+                  Electronics
+                </Row>
+              </div>
+
+              <hr />
+
+              <div style={{ cursor: 'pointer' }} onClick={() => setRatings(1)}>
+                <FontAwesomeIcon
+                  color='#f8e825'
+                  icon={faStar}
+                  style={{ marginLeft: '10px' }}
+                />
+              </div>
+              <div style={{ cursor: 'pointer' }} onClick={() => setRatings(2)}>
+                <FontAwesomeIcon
+                  color='#f8e825'
+                  icon={faStar}
+                  style={{ marginLeft: '10px' }}
+                />
+                <FontAwesomeIcon
+                  color='#f8e825'
+                  icon={faStar}
+                  style={{ marginLeft: '10px' }}
+                />
+              </div>
+              <div style={{ cursor: 'pointer' }} onClick={() => setRatings(3)}>
+                <FontAwesomeIcon
+                  color='#f8e825'
+                  icon={faStar}
+                  style={{ marginLeft: '10px' }}
+                />
+                <FontAwesomeIcon
+                  color='#f8e825'
+                  icon={faStar}
+                  style={{ marginLeft: '10px' }}
+                />
+                <FontAwesomeIcon
+                  color='#f8e825'
+                  icon={faStar}
+                  style={{ marginLeft: '10px' }}
+                />
+              </div>
+              <div style={{ cursor: 'pointer' }} onClick={() => setRatings(4)}>
+                <FontAwesomeIcon
+                  color='#f8e825'
+                  icon={faStar}
+                  style={{ marginLeft: '10px' }}
+                />
+                <FontAwesomeIcon
+                  color='#f8e825'
+                  icon={faStar}
+                  style={{ marginLeft: '10px' }}
+                />
+                <FontAwesomeIcon
+                  color='#f8e825'
+                  icon={faStar}
+                  style={{ marginLeft: '10px' }}
+                />
+                <FontAwesomeIcon
+                  color='#f8e825'
+                  icon={faStar}
+                  style={{ marginLeft: '10px' }}
+                />
+              </div>
+              <div style={{ cursor: 'pointer' }} onClick={() => setRatings(5)}>
+                <FontAwesomeIcon
+                  color='#f8e825'
+                  icon={faStar}
+                  style={{ marginLeft: '10px' }}
+                />
+                <FontAwesomeIcon
+                  color='#f8e825'
+                  icon={faStar}
+                  style={{ marginLeft: '10px' }}
+                />
+                <FontAwesomeIcon
+                  color='#f8e825'
+                  icon={faStar}
+                  style={{ marginLeft: '10px' }}
+                />
+                <FontAwesomeIcon
+                  color='#f8e825'
+                  icon={faStar}
+                  style={{ marginLeft: '10px' }}
+                />
+                <FontAwesomeIcon
+                  color='#f8e825'
+                  icon={faStar}
+                  style={{ marginLeft: '10px' }}
+                />
+              </div>
+            </Card>
           </Col>
           {products &&
             products.map((product) => (

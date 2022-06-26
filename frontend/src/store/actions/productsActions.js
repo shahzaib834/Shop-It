@@ -10,15 +10,26 @@ import {
 } from './types';
 
 export const getProducts =
-  (keyword = '', currentPage = 1, price) =>
+  (
+    keyword = '',
+    currentPage = 1,
+    minPrice = 0,
+    maxPrice = 1000,
+    category,
+    ratings
+  ) =>
   async (dispatch) => {
     try {
       dispatch({ type: ALL_PRODUCTS_REQUEST });
 
-      const { data } = await axios.get(
-        `/api/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}`
-      );
+      let link = `/api/products?keyword=${keyword}&page=${currentPage}&ratings[gte]=${ratings}`;
 
+      if (category) {
+        link = `/api/products?keyword=${keyword}&page=${currentPage}&category=${category}&ratings[gte]=${ratings}`;
+      }
+
+      const { data } = await axios.get(link);
+      // price[lte]=${minPrice}&price[gte]=${maxPrice}   price filter for later
       dispatch({ type: ALL_PRODUCT_SUCCESS, payload: data });
     } catch (err) {
       dispatch({
