@@ -16,6 +16,7 @@ const App = () => {
       <Container>
         <Routes>
           <Route index element={<HomeScreen />} />
+          <Route path={`/search/:keyword`} element={<HomeScreen />} />
           <Route path={'/products/:id'} element={<ProductScreen />} />
         </Routes>
       </Container>

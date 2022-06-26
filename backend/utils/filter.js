@@ -29,13 +29,11 @@ const filter = (Product, query) => {
   );
 
   // Pagination Settings
-  const resultPerPage = 8;
+  const resPerPage = 4;
   const currentPage = Number(query.page || 1);
-  const skip = resultPerPage * (currentPage - 1);
+  const skip = resPerPage * (currentPage - 1);
 
-  return Product.find(JSON.parse(filteredQuery))
-    .limit(resultPerPage)
-    .skip(skip);
+  return Product.find(JSON.parse(filteredQuery)).limit(resPerPage).skip(skip);
 };
 
 module.exports = { filter };

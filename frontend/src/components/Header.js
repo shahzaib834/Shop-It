@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+import { useNavigate } from 'react-router-dom';
 
 import {
   Navbar,
@@ -15,6 +17,20 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import logo from '../utils/shopit_logo.png';
 
 const Header = () => {
+  const [keyword, setKeyword] = useState('');
+
+  const navigate = useNavigate();
+
+  const searchHandler = (e) => {
+    e.preventDefault();
+
+    if (keyword.trim()) {
+      navigate(`/search/${keyword}`);
+    } else {
+      navigate(`/`);
+    }
+  };
+
   return (
     <header>
       <Navbar
@@ -35,14 +51,23 @@ const Header = () => {
           >
             <Image src={logo} />
 
-            <div>
+            <Form>
               <InputGroup style={{ width: '40rem' }}>
-                <Form.Control type='search' placeholder='Enter Products ...' />
-                <Button variant='warning' size='sm' id='button-addon2'>
+                <Form.Control
+                  type='search'
+                  placeholder='Enter Products ...'
+                  onChange={(e) => setKeyword(e.target.value)}
+                />
+                <Button
+                  variant='warning'
+                  size='sm'
+                  id='button-addon2'
+                  onClick={searchHandler}
+                >
                   <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </Button>
               </InputGroup>
-            </div>
+            </Form>
 
             <div>
               <Navbar.Collapse id='basic-navbar-nav'>
@@ -60,20 +85,17 @@ const Header = () => {
                       display: 'flex',
                     }}
                   >
-                    <div>
-                      <Button variant='transparent' style={{ color: '#fff' }}>
-                        Cart
-                      </Button>
+                    <Button variant='transparent' style={{ color: '#fff' }}>
+                      Cart
+                    </Button>
 
-                      <div
-                        style={{
-                          display: 'inline',
-                          color: 'orange',
-                          borderRadius: '100px',
-                        }}
-                      >
-                        2
-                      </div>
+                    <div
+                      style={{
+                        color: 'orange',
+                        borderRadius: '100px',
+                      }}
+                    >
+                      2
                     </div>
                   </div>
                 </div>
