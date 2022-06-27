@@ -13,8 +13,14 @@ const RegisterScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
+  const [avatar, setAvatar] = useState('');
+  const [avatarPreview, setAvatarPreview] = useState(
+    '/images/default_avatar/jpg'
+  );
 
-  const { loading, error } = useSelector((state) => state.auth);
+  const { loading, error, isAuthenticated } = useSelector(
+    (state) => state.auth
+  );
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,13 +31,16 @@ const RegisterScreen = () => {
 
   const registerButtonHandler = (e) => {
     e.preventDefault();
-    dispatch(register(name, email, password));
 
-    if (error) {
-      console.log(error);
-    } else {
+    dispatch(register(name, email, password, avatar));
+
+    if (isAuthenticated) {
       navigate('/');
     }
+  };
+
+  const onChange = (e) => {
+    setAvatar(e.target.value);
   };
 
   return (
@@ -42,11 +51,11 @@ const RegisterScreen = () => {
         <Card
           style={{
             width: '40%',
-            height: '25rem',
+            height: '30rem',
             padding: '40px',
             backgroundColor: '#fff',
             margin: 'auto',
-            marginTop: '12%',
+            marginTop: '8%',
           }}
         >
           <h3>Register</h3>
@@ -81,10 +90,16 @@ const RegisterScreen = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
 
+            <Form.Group controlId='avatar'>
+              <Form.Label>Avatar</Form.Label>
+              <Form.Control type='file' onChange={onChange} accept='images/*' />
+            </Form.Group>
+
             <Button
               variant='warning'
               style={{ width: '100%', marginTop: '8px' }}
               onClick={registerButtonHandler}
+              disabled={loading ? true : false}
             >
               Register
             </Button>

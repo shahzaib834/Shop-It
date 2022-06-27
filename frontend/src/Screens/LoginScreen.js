@@ -43,7 +43,7 @@ const LoginScreen = () => {
             padding: '40px',
             backgroundColor: '#fff',
             margin: 'auto',
-            marginTop: '12%',
+            marginTop: '8%',
           }}
         >
           <h3>Login</h3>

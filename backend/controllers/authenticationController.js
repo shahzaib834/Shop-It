@@ -1,7 +1,18 @@
 const User = require('../models/user');
+const cloudinary = require('cloudinary');
 
 const registerUser = async (req, res) => {
   try {
+    const cloudinaryResult = await cloudinary.v2.uploader.upload(
+      req.body.avatar,
+      {
+        folder: 'Shop-it/avatars',
+        width: 150,
+        crop: 'scale',
+      }
+    );
+
+    console.log(`cloudinaryResult : ${cloudinaryResult}`);
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
@@ -17,7 +28,10 @@ const registerUser = async (req, res) => {
       name,
       email,
       password,
-      avatar: { public_id: '1', url: '2' },
+      avatar: {
+        public_id: cloudinaryResult.public_id,
+        url: cloudinaryResult.secure_url,
+      },
     });
 
     const token = user.generateWebToken();
@@ -37,6 +51,7 @@ const registerUser = async (req, res) => {
       token,
     });
   } catch (err) {
+    console.log(err);
     res.status(400).json({
       success: false,
       message: err.message,
