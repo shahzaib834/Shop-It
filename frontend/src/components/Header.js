@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import {
   Navbar,
@@ -49,8 +49,9 @@ const Header = () => {
               alignItems: 'center',
             }}
           >
-            <Image src={logo} />
-
+            <Link to={'/'}>
+              <Image src={logo} />
+            </Link>
             <Form>
               <InputGroup style={{ width: '40rem' }}>
                 <Form.Control
@@ -79,7 +80,9 @@ const Header = () => {
                     justifyContent: 'space-between',
                   }}
                 >
-                  <Button variant='warning'>Login</Button>
+                  <Button variant='warning' onClick={() => navigate('/login')}>
+                    Login
+                  </Button>
                   <div
                     style={{
                       display: 'flex',

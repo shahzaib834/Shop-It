@@ -92,6 +92,7 @@ const loginUser = async (req, res) => {
     res.status(200).cookie('token', token, options).json({
       success: true,
       token,
+      user,
     });
   } catch (err) {
     res.status(400).json({
