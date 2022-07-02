@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { ListGroup, Col, Button, Row, Image } from 'react-bootstrap';
 
@@ -11,7 +11,11 @@ import Ratings from '../components/Ratings';
 
 import img from '../utils/camera.jpeg';
 
+import { addToCart } from '../store/actions/cartActions';
+
 const ProductScreen = () => {
+  const [quantity, setQuantity] = useState(1);
+
   const { loading, product } = useSelector((state) => state.product);
 
   const dispatch = useDispatch();
@@ -20,6 +24,22 @@ const ProductScreen = () => {
   useEffect(() => {
     dispatch(getProductDetails(params.id));
   }, [dispatch]);
+
+  const incrementQuantity = () => {
+    if (product.stock > quantity) {
+      setQuantity(quantity + 1);
+    }
+  };
+
+  const decrementQuantity = () => {
+    if (quantity >= 2) {
+      setQuantity(quantity - 1);
+    }
+  };
+
+  const toCart = () => {
+    dispatch(addToCart(params.id, quantity));
+  };
 
   return (
     <div className='p-2'>
@@ -45,7 +65,9 @@ const ProductScreen = () => {
               <h2>$ {product.price}</h2>
               <Row>
                 <Col md={1}>
-                  <Button>-</Button>
+                  <Button onClick={decrementQuantity} variant='warning'>
+                    -
+                  </Button>
                 </Col>
                 <Col md={1}>
                   <h6
@@ -54,14 +76,18 @@ const ProductScreen = () => {
                       paddingTop: '10px',
                     }}
                   >
-                    1
+                    {quantity}
                   </h6>
                 </Col>
                 <Col md={1}>
-                  <Button>+</Button>
+                  <Button onClick={incrementQuantity} variant='warning'>
+                    +
+                  </Button>
                 </Col>
                 <Col md={9}>
-                  <Button>Add to Cart</Button>
+                  <Button variant='warning' onClick={toCart}>
+                    Add to Cart
+                  </Button>
                 </Col>
               </Row>
             </ListGroup.Item>
@@ -81,7 +107,7 @@ const ProductScreen = () => {
             </ListGroup.Item>
 
             <ListGroup.Item>
-              <Button>Submit Your Review</Button>
+              <Button variant='warning'>Submit Your Review</Button>
             </ListGroup.Item>
           </ListGroup>
         </Col>
