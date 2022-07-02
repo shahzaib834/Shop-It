@@ -71,13 +71,7 @@ const ProductScreen = () => {
             </ListGroup.Item>
             <ListGroup.Item>
               <h6>Description :</h6>
-              <p>
-                adasldk;laskd;lask;dklas;lkd;laskd;kas;ldk;askdkssssssssssssssssss
-                asdasdasdasdasdasdsdlfkdddddddddddddddddddddddddddddddddddddddddddd
-                sdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-                ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
-                ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
-              </p>
+              <p>{product.description}</p>
             </ListGroup.Item>
 
             <ListGroup.Item>

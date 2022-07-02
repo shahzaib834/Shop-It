@@ -1,4 +1,5 @@
 import './App.css';
+import { useEffect } from 'react';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomeScreen from './Screens/HomeScreen';
@@ -8,10 +9,17 @@ import RegisterScreen from './Screens/RegisterScreen';
 
 import { Container } from 'react-bootstrap';
 
+import { loadUser } from './store/actions/userActions';
+import store from './store/store';
+
 import Header from './components/Header';
 import Footer from './components/Footer';
 
 const App = () => {
+  useEffect(() => {
+    store.dispatch(loadUser());
+  });
+
   return (
     <BrowserRouter>
       <Header />

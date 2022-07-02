@@ -16,9 +16,17 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 import logo from '../utils/shopit_logo.png';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { logOut } from '../store/actions/userActions';
+
+import avatar from '../utils/avatar-1.png';
+
 const Header = () => {
   const [keyword, setKeyword] = useState('');
 
+  const { loading, user } = useSelector((state) => state.auth);
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const searchHandler = (e) => {
@@ -29,6 +37,10 @@ const Header = () => {
     } else {
       navigate(`/`);
     }
+  };
+
+  const logout = () => {
+    dispatch(logOut());
   };
 
   return (
@@ -80,9 +92,6 @@ const Header = () => {
                     justifyContent: 'space-between',
                   }}
                 >
-                  <Button variant='warning' onClick={() => navigate('/login')}>
-                    Login
-                  </Button>
                   <div
                     style={{
                       display: 'flex',
@@ -101,6 +110,34 @@ const Header = () => {
                       2
                     </div>
                   </div>
+
+                  {user ? (
+                    <Link
+                      to={'/'}
+                      onClick={logout}
+                      style={{ textDecoration: 'none', marginLeft: '20px' }}
+                    >
+                      <Image
+                        src={avatar}
+                        fluid
+                        style={{
+                          width: '100%',
+                          height: '90%',
+                          borderRadius: '100px',
+                        }}
+                      />
+                    </Link>
+                  ) : (
+                    !loading && (
+                      <Button
+                        variant='warning'
+                        onClick={() => navigate('/login')}
+                        style={{ marginLeft: '20px' }}
+                      >
+                        Login
+                      </Button>
+                    )
+                  )}
                 </div>
               </Navbar.Collapse>
             </div>

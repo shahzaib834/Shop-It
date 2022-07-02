@@ -5,6 +5,12 @@ import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  LOAD_USER_REQUEST,
+  LOAD_USER_SUCCESS,
+  LOAD_USER_FAIL,
+  LOG_OUT_REQUEST,
+  LOG_OUT_SUCCESS,
+  LOG_OUT_FAIL,
 } from './types';
 
 import axios from 'axios';
@@ -59,6 +65,45 @@ export const register = (name, email, password, avatar) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: REGISTER_FAIL,
+      error: err.response.data.message,
+    });
+  }
+};
+
+export const loadUser = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: LOAD_USER_REQUEST,
+    });
+
+    const { data } = await axios.get(`/api/users/me`);
+
+    dispatch({
+      type: LOAD_USER_SUCCESS,
+      payload: data.user,
+    });
+  } catch (err) {
+    dispatch({
+      type: LOAD_USER_FAIL,
+      error: err.response.data.message,
+    });
+  }
+};
+
+export const logOut = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: LOG_OUT_REQUEST,
+    });
+
+    const { data } = await axios.get(`/api/users/logout`);
+
+    dispatch({
+      type: LOG_OUT_SUCCESS,
+    });
+  } catch (err) {
+    dispatch({
+      type: LOG_OUT_FAIL,
       error: err.response.data.message,
     });
   }
