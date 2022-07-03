@@ -97,7 +97,11 @@ const Header = () => {
                       display: 'flex',
                     }}
                   >
-                    <Button variant='transparent' style={{ color: '#fff' }}>
+                    <Button
+                      variant='transparent'
+                      style={{ color: '#fff' }}
+                      onClick={() => navigate('/cart')}
+                    >
                       Cart
                     </Button>
 
