@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { ListGroup, Col, Button, Row, Image } from 'react-bootstrap';
+import { ListGroup, Col, Button, Row, Image, Toast } from 'react-bootstrap';
 
 import { useParams } from 'react-router-dom';
 
@@ -10,20 +10,28 @@ import { getProductDetails } from '../store/actions/productsActions';
 import Ratings from '../components/Ratings';
 
 import img from '../utils/camera.jpeg';
+import { CartState } from '../context/Context';
 
-import { addToCart } from '../store/actions/cartActions';
+// import { addToCart } from '../store/actions/cartActions';
 
 const ProductScreen = () => {
+  const [showToast, setShowToast] = useState(false);
+
+  const {
+    state: { cart },
+    dispatch,
+  } = CartState();
+
   const [quantity, setQuantity] = useState(1);
 
   const { loading, product } = useSelector((state) => state.product);
 
-  const dispatch = useDispatch();
+  const dispatchRedux = useDispatch();
   const params = useParams();
 
   useEffect(() => {
-    dispatch(getProductDetails(params.id));
-  }, [dispatch]);
+    dispatchRedux(getProductDetails(params.id));
+  }, [dispatchRedux]);
 
   const incrementQuantity = () => {
     if (product.stock > quantity) {
@@ -38,7 +46,26 @@ const ProductScreen = () => {
   };
 
   const toCart = () => {
-    dispatch(addToCart(params.id, quantity));
+    const alreadyHaveItem = cart.some((c) => {
+      return c.id === product._id;
+    });
+
+    if (!alreadyHaveItem) {
+      dispatch({
+        type: 'ADD_TO_CART',
+        payload: {
+          id: product._id,
+          name: product.name,
+          price: product.price,
+          stock: product.stock,
+          quantity,
+        },
+      });
+    } else {
+      setShowToast(true);
+    }
+
+    //dispatch(addToCart(params.id, quantity));
   };
 
   return (
@@ -49,6 +76,9 @@ const ProductScreen = () => {
         </Col>
 
         <Col md={6} className='mt-5'>
+          <Toast show={showToast} style={{ backgroundColor: '#ed3511' }}>
+            <Toast.Body>Item already added in cart.</Toast.Body>
+          </Toast>
           <ListGroup variant='flush'>
             <ListGroup.Item>
               <h3>{product.name}</h3>

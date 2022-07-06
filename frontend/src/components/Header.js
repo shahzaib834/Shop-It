@@ -9,6 +9,8 @@ import {
   Button,
   InputGroup,
   Image,
+  Dropdown,
+  Badge,
 } from 'react-bootstrap';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -99,38 +101,33 @@ const Header = () => {
                   >
                     <Button
                       variant='transparent'
-                      style={{ color: '#fff' }}
+                      style={{ color: '#fff', display: 'flex' }}
                       onClick={() => navigate('/cart')}
                     >
                       Cart
+                      <Badge style={{ left: '5px' }}>{2}</Badge>
                     </Button>
-
-                    <div
-                      style={{
-                        color: 'orange',
-                        borderRadius: '100px',
-                      }}
-                    >
-                      2
-                    </div>
                   </div>
 
                   {user ? (
-                    <Link
-                      to={'/'}
-                      onClick={logout}
-                      style={{ textDecoration: 'none', marginLeft: '20px' }}
-                    >
-                      <Image
-                        src={avatar}
-                        fluid
-                        style={{
-                          width: '100%',
-                          height: '90%',
-                          borderRadius: '100px',
-                        }}
-                      />
-                    </Link>
+                    <Dropdown alignRight>
+                      <Dropdown.Toggle variant='success'>
+                        <Image
+                          src={avatar}
+                          fluid
+                          style={{
+                            width: '100%',
+                            height: '90%',
+                            borderRadius: '100px',
+                          }}
+                        />
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu>
+                        <span style={{ padding: '10px' }} onClick={logout}>
+                          Log out
+                        </span>
+                      </Dropdown.Menu>
+                    </Dropdown>
                   ) : (
                     !loading && (
                       <Button

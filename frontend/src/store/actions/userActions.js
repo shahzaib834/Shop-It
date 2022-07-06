@@ -96,7 +96,7 @@ export const logOut = () => async (dispatch) => {
       type: LOG_OUT_REQUEST,
     });
 
-    const { data } = await axios.get(`/api/users/logout`);
+    await axios.get(`/api/users/logout`);
 
     dispatch({
       type: LOG_OUT_SUCCESS,
