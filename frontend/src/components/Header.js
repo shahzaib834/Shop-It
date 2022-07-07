@@ -19,19 +19,16 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import logo from '../utils/shopit_logo.png';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { logOut } from '../store/actions/userActions';
+
+import { logOut } from '../store/authReducer';
 
 import avatar from '../utils/avatar-1.png';
 
-import { CartState } from '../context/Context';
-
 const Header = () => {
-  const {
-    state: { cart },
-  } = CartState();
   const [keyword, setKeyword] = useState('');
 
-  const { loading, user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
+  const { cartItems } = useSelector((state) => state.cart);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -110,13 +107,13 @@ const Header = () => {
                       onClick={() => navigate('/cart')}
                     >
                       Cart
-                      <Badge style={{ left: '5px' }}>{cart.length}</Badge>
+                      <Badge style={{ left: '5px' }}>{cartItems.length}</Badge>
                     </Button>
                   </div>
 
-                  {user ? (
-                    <Dropdown alignRight>
-                      <Dropdown.Toggle variant='success'>
+                  {user !== null ? (
+                    <Dropdown>
+                      <Dropdown.Toggle variant='#000'>
                         <Image
                           src={avatar}
                           fluid
@@ -134,15 +131,13 @@ const Header = () => {
                       </Dropdown.Menu>
                     </Dropdown>
                   ) : (
-                    !loading && (
-                      <Button
-                        variant='warning'
-                        onClick={() => navigate('/login')}
-                        style={{ marginLeft: '20px' }}
-                      >
-                        Login
-                      </Button>
-                    )
+                    <Button
+                      variant='warning'
+                      onClick={() => navigate('/login')}
+                      style={{ marginLeft: '20px' }}
+                    >
+                      Login
+                    </Button>
                   )}
                 </div>
               </Navbar.Collapse>

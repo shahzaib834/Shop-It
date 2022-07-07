@@ -1,17 +1,14 @@
-import axios from 'axios';
 import { CART_ADD_ITEMS, CART_REMOVE_ITEMS } from './types';
 
-export const addToCart = (id, qty) => async (dispatch, getState) => {
-  try {
-    const { data } = await axios.get(`/api/products/${id}`);
-
+export const addToCart =
+  (id, name, price, stock, qty) => async (dispatch, getState) => {
     dispatch({
       type: CART_ADD_ITEMS,
       payload: {
-        product: data.product._id,
-        name: data.product.name,
-        price: data.product.price,
-        stock: data.product.stock,
+        id,
+        name,
+        price,
+        stock,
         qty,
       },
     });
@@ -20,10 +17,7 @@ export const addToCart = (id, qty) => async (dispatch, getState) => {
       'cartItems',
       JSON.stringify(getState().cart.cartItems)
     );
-  } catch (error) {
-    console.log(error);
-  }
-};
+  };
 
 export const removeFromCart = (id) => (dispatch, getState) => {
   try {

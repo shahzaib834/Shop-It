@@ -1,37 +1,31 @@
 import React, { useEffect, useState } from 'react';
-
 import { ListGroup, Col, Button, Row, Image, Toast } from 'react-bootstrap';
 
 import { useParams } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { getProductDetails } from '../store/actions/productsActions';
+import { fetchProduct } from '../store/productReducer';
 
 import Ratings from '../components/Ratings';
 
 import img from '../utils/camera.jpeg';
-import { CartState } from '../context/Context';
 
-// import { addToCart } from '../store/actions/cartActions';
+import { addToCart } from '../store/cartReducer';
 
 const ProductScreen = () => {
   const [showToast, setShowToast] = useState(false);
-
-  const {
-    state: { cart },
-    dispatch,
-  } = CartState();
-
   const [quantity, setQuantity] = useState(1);
 
-  const { loading, product } = useSelector((state) => state.product);
+  const { product } = useSelector((state) => state.product);
+  const { cartItems } = useSelector((state) => state.cart);
 
-  const dispatchRedux = useDispatch();
+  const dispatch = useDispatch();
   const params = useParams();
 
   useEffect(() => {
-    dispatchRedux(getProductDetails(params.id));
-  }, [dispatchRedux]);
+    dispatch(fetchProduct(params.id));
+    //dispatch(getProductDetails(params.id));
+  }, [dispatch]);
 
   const incrementQuantity = () => {
     if (product.stock > quantity) {
@@ -46,26 +40,22 @@ const ProductScreen = () => {
   };
 
   const toCart = () => {
-    const alreadyHaveItem = cart.some((c) => {
+    const alreadyHaveItem = cartItems.some((c) => {
       return c.id === product._id;
     });
 
     if (!alreadyHaveItem) {
-      dispatch({
-        type: 'ADD_TO_CART',
-        payload: {
-          id: product._id,
-          name: product.name,
-          price: product.price,
-          stock: product.stock,
-          quantity,
-        },
-      });
+      const item = {
+        id: product._id,
+        name: product.name,
+        price: product.price,
+        stock: product.stock,
+        quantity,
+      };
+      dispatch(addToCart(item));
     } else {
       setShowToast(true);
     }
-
-    //dispatch(addToCart(params.id, quantity));
   };
 
   return (

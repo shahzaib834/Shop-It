@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import { getProducts } from '../store/actions/productsActions';
+import { fetchProducts } from '../store/productsReducer';
 
 import Loader from '../components/Loader';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,12 +15,12 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 const HomeScreen = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [minPrice, setMinPrice] = useState(1);
+  const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
   const [category, setCategory] = useState('');
   const [ratings, setRatings] = useState(0);
 
-  const { loading, products, productsCount, resPerPage } = useSelector(
+  const { status, products, productsCount, resPerPage } = useSelector(
     (state) => state.products
   );
 
@@ -46,7 +46,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     dispatch(
-      getProducts(keyword, currentPage, minPrice, maxPrice, category, ratings)
+      fetchProducts(keyword, currentPage, minPrice, maxPrice, category, ratings)
     );
   }, [dispatch, keyword, currentPage, minPrice, maxPrice, category, ratings]);
 
@@ -55,7 +55,11 @@ const HomeScreen = () => {
   };
   return (
     <>
-      {loading ? <Loader /> : <h1 className='px-4 py-2 '>LATEST PRODUCTS</h1>}
+      {status === 'loading' ? (
+        <Loader />
+      ) : (
+        <h1 className='px-4 py-2 '>LATEST PRODUCTS</h1>
+      )}
       {keyword ? (
         <Row>
           <Col sm={8} md={4} lg={3} xl={2}>

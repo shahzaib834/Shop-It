@@ -4,7 +4,6 @@ import '../../node_modules/react-bootstrap/dist/react-bootstrap.min';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Context from './context/Context';
 
 import store from './store/store';
 import { Provider } from 'react-redux';
@@ -12,9 +11,7 @@ import { Provider } from 'react-redux';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    <Context>
-      <App />
-    </Context>
+    <App />
   </Provider>
 );
 

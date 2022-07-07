@@ -1,37 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Card, Button, InputGroup, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 import img from '../utils/camera.jpeg';
-import { CartState } from '../context/Context';
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { removeFromCart } from '../store/cartReducer';
 
 const CartScreen = () => {
-  const {
-    state: { cart },
-    dispatch,
-  } = CartState();
-
   const [qtyValue, setQtyValue] = useState(0);
 
-  /* const onDeleteButtonClick = (id) => {
-    console.log('Clicked');
-    dispatch({
-      type: 'REMOVE_FROM_CART',
-      payload: id,
-    });
-  }; */
+  const { cartItems } = useSelector((state) => state.cart);
+
+  const dispatch = useDispatch();
+
+  const onDeleteButtonClick = (id) => {
+    dispatch(removeFromCart(id));
+  };
 
   return (
     <div style={{ marginTop: '40px' }}>
-      {cart.length <= 0 ? (
+      {cartItems.length <= 0 ? (
         <h2>Your Cart is Empty</h2>
       ) : (
         <>
           <h2>
-            Your Cart: <strong>{cart.length} Items</strong>
+            Your Cart: <strong>{cartItems.length} Items</strong>
           </h2>
           <div className='d-flex'>
             <div
@@ -43,7 +39,7 @@ const CartScreen = () => {
                 alignItems: 'center',
               }}
             >
-              {cart.map((c) => (
+              {cartItems.map((c) => (
                 <Card
                   style={{
                     display: 'flex',
@@ -70,7 +66,11 @@ const CartScreen = () => {
                       onChange={(e) => setQtyValue(e.target.value)}
                     />
                   </InputGroup>
-                  <FontAwesomeIcon icon={faTrashCan} color='red' />
+                  <FontAwesomeIcon
+                    icon={faTrashCan}
+                    color='red'
+                    onClick={() => onDeleteButtonClick(c.id)}
+                  />
                 </Card>
               ))}
             </div>
@@ -99,7 +99,13 @@ const CartScreen = () => {
               >
                 <Card.Text>Sub Total:</Card.Text>
                 <Card.Text>
-                  <strong>{cart.length} (Units)</strong>
+                  <strong>
+                    {cartItems.reduce(
+                      (acc, item) => acc + Number(item.quantity),
+                      0
+                    )}
+                    (Units)
+                  </strong>
                 </Card.Text>
               </div>
 
@@ -114,9 +120,12 @@ const CartScreen = () => {
                 <Card.Text>Est. Total:</Card.Text>
                 <Card.Text>
                   <strong>
-                    {cart.reduce((acc, currentValue) => {
-                      return acc + currentValue.price;
-                    }, 0)}
+                    {cartItems
+                      .reduce(
+                        (acc, item) => acc + item.quantity * item.price,
+                        0
+                      )
+                      .toFixed(2)}
                   </strong>
                 </Card.Text>
               </div>

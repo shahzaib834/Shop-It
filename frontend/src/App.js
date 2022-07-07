@@ -10,7 +10,7 @@ import CartScreen from './Screens/CartScreen';
 
 import { Container } from 'react-bootstrap';
 
-import { loadUser } from './store/actions/userActions';
+import { loadUser } from './store/authReducer';
 import store from './store/store';
 
 import Header from './components/Header';

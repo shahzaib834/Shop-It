@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { login } from '../store/actions/userActions';
-
+import { login } from '../store/authReducer';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { useNavigate } from 'react-router-dom';
@@ -14,7 +13,7 @@ const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { isAuthenticated, loading } = useSelector((state) => state.auth);
+  const { isAuthenticated, status } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -33,7 +32,7 @@ const LoginScreen = () => {
 
   return (
     <>
-      {loading ? (
+      {status === 'loading' ? (
         <Loader />
       ) : (
         <Card

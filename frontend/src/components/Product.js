@@ -10,7 +10,7 @@ const Product = ({ product }) => {
     <Card className='p-2 mx-2'>
       <Card.Img src={img} />
 
-      <Card.Text>{product.name}</Card.Text>
+      <Card.Text style={{ minHeight: '48px' }}>{product.name}</Card.Text>
 
       <Ratings numReviews={product.numOfReviews} ratings={product.ratings} />
       <Card.Text>$ {product.price}</Card.Text>
