@@ -23,7 +23,12 @@ import { logOut } from '../store/actions/userActions';
 
 import avatar from '../utils/avatar-1.png';
 
+import { CartState } from '../context/Context';
+
 const Header = () => {
+  const {
+    state: { cart },
+  } = CartState();
   const [keyword, setKeyword] = useState('');
 
   const { loading, user } = useSelector((state) => state.auth);
@@ -105,7 +110,7 @@ const Header = () => {
                       onClick={() => navigate('/cart')}
                     >
                       Cart
-                      <Badge style={{ left: '5px' }}>{2}</Badge>
+                      <Badge style={{ left: '5px' }}>{cart.length}</Badge>
                     </Button>
                   </div>
 

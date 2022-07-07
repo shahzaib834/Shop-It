@@ -1,19 +1,23 @@
 import React from 'react';
 
-import { Card, Button } from 'react-bootstrap';
+import { Card, Button, InputGroup, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 import img from '../utils/camera.jpeg';
 import { CartState } from '../context/Context';
-import { useEffect } from 'react';
+import { useState } from 'react';
 
 const CartScreen = () => {
   const {
     state: { cart },
+    dispatch,
   } = CartState();
 
+  const [qtyValue, setQtyValue] = useState(0);
+
   /* const onDeleteButtonClick = (id) => {
+    console.log('Clicked');
     dispatch({
       type: 'REMOVE_FROM_CART',
       payload: id,
@@ -59,11 +63,13 @@ const CartScreen = () => {
                   <Card.Text style={{ fontSize: '25px', color: 'orange' }}>
                     $ {c.price}
                   </Card.Text>
-                  <Button style={{ backgroundColor: 'red', border: 'none' }}>
-                    -
-                  </Button>
-                  <Card.Text>{c.quantity}</Card.Text>
-                  <Button>+</Button>
+                  <InputGroup className='mb-3' style={{ width: '10%' }}>
+                    <InputGroup.Text>Qty</InputGroup.Text>
+                    <Form.Control
+                      value={qtyValue}
+                      onChange={(e) => setQtyValue(e.target.value)}
+                    />
+                  </InputGroup>
                   <FontAwesomeIcon icon={faTrashCan} color='red' />
                 </Card>
               ))}
@@ -107,7 +113,11 @@ const CartScreen = () => {
               >
                 <Card.Text>Est. Total:</Card.Text>
                 <Card.Text>
-                  <strong>$7564.5</strong>
+                  <strong>
+                    {cart.reduce((acc, currentValue) => {
+                      return acc + currentValue.price;
+                    }, 0)}
+                  </strong>
                 </Card.Text>
               </div>
               <br />
