@@ -20,9 +20,10 @@ export const login = createAsyncThunk('user/login', async (email, password) => {
       { email, password },
       config
     );
-    return data.user;
+
+    return data;
   } catch (err) {
-    return err.message;
+    return err.response.data.message;
   }
 });
 
@@ -58,7 +59,8 @@ export const logOut = createAsyncThunk('user/logout', async () => {
 export const loadUser = createAsyncThunk('user/loadUser', async () => {
   try {
     const { data } = await axios.get(`/api/users/me`);
-    return data.user;
+
+    return data;
   } catch (err) {
     return err.message;
   }
@@ -100,9 +102,15 @@ const userSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(loadUser.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.user = action.payload;
-        state.isAuthenticated = true;
+        if (action.payload.success === true) {
+          state.status = 'succeeded';
+          state.user = action.payload.user;
+          state.isAuthenticated = true;
+        } else {
+          state.status = 'succeeded';
+          state.user = null;
+          state.isAuthenticated = false;
+        }
       })
       .addCase(loadUser.rejected, (state, action) => {
         state.status = 'failed';

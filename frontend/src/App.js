@@ -7,6 +7,7 @@ import ProductScreen from './Screens/ProductScreen';
 import LoginScreen from './Screens/LoginScreen';
 import RegisterScreen from './Screens/RegisterScreen';
 import CartScreen from './Screens/CartScreen';
+import ShippingScreen from './Screens/ShippingScreen';
 
 import { Container } from 'react-bootstrap';
 
@@ -32,6 +33,7 @@ const App = () => {
           <Route path={'/login'} element={<LoginScreen />} />
           <Route path={'/register'} element={<RegisterScreen />} />
           <Route path={'/cart'} element={<CartScreen />} />
+          <Route path={'/shipping'} element={<ShippingScreen />} />
         </Routes>
       </Container>
       <Footer />

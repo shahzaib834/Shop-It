@@ -107,7 +107,13 @@ const Header = () => {
                       onClick={() => navigate('/cart')}
                     >
                       Cart
-                      <Badge style={{ left: '5px' }}>{cartItems.length}</Badge>
+                      {user !== null ? (
+                        <Badge style={{ left: '5px' }}>
+                          {cartItems.length}
+                        </Badge>
+                      ) : (
+                        <></>
+                      )}
                     </Button>
                   </div>
 

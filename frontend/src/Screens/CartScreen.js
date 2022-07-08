@@ -9,20 +9,30 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { removeFromCart } from '../store/cartReducer';
 
+import { useNavigate } from 'react-router-dom';
+
 const CartScreen = () => {
   const [qtyValue, setQtyValue] = useState(0);
 
   const { cartItems } = useSelector((state) => state.cart);
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onDeleteButtonClick = (id) => {
     dispatch(removeFromCart(id));
   };
 
+  const handleCheckOut = () => {
+    navigate('/shipping');
+  };
+
   return (
     <div style={{ marginTop: '40px' }}>
-      {cartItems.length <= 0 ? (
+      {!isAuthenticated ? (
+        <h2>Login to see your cart</h2>
+      ) : cartItems.length <= 0 ? (
         <h2>Your Cart is Empty</h2>
       ) : (
         <>
@@ -137,6 +147,7 @@ const CartScreen = () => {
                   borderRadius: '15px',
                   width: '90%',
                 }}
+                onClick={handleCheckOut}
               >
                 Check Out
               </Button>

@@ -13,11 +13,14 @@ import img from '../utils/camera.jpeg';
 import { addToCart } from '../store/cartReducer';
 
 const ProductScreen = () => {
-  const [showToast, setShowToast] = useState(false);
+  const [showCartToast, setShowCartToast] = useState(false);
+  const [loginToast, setLoginToast] = useState(false);
+
   const [quantity, setQuantity] = useState(1);
 
   const { product } = useSelector((state) => state.product);
   const { cartItems } = useSelector((state) => state.cart);
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
   const params = useParams();
@@ -40,21 +43,25 @@ const ProductScreen = () => {
   };
 
   const toCart = () => {
-    const alreadyHaveItem = cartItems.some((c) => {
-      return c.id === product._id;
-    });
+    if (isAuthenticated) {
+      const alreadyHaveItem = cartItems.some((c) => {
+        return c.id === product._id;
+      });
 
-    if (!alreadyHaveItem) {
-      const item = {
-        id: product._id,
-        name: product.name,
-        price: product.price,
-        stock: product.stock,
-        quantity,
-      };
-      dispatch(addToCart(item));
+      if (!alreadyHaveItem) {
+        const item = {
+          id: product._id,
+          name: product.name,
+          price: product.price,
+          stock: product.stock,
+          quantity,
+        };
+        dispatch(addToCart(item));
+      } else {
+        setShowCartToast(true);
+      }
     } else {
-      setShowToast(true);
+      setLoginToast(true);
     }
   };
 
@@ -66,8 +73,11 @@ const ProductScreen = () => {
         </Col>
 
         <Col md={6} className='mt-5'>
-          <Toast show={showToast} style={{ backgroundColor: '#ed3511' }}>
+          <Toast show={showCartToast} style={{ backgroundColor: '#ed3511' }}>
             <Toast.Body>Item already added in cart.</Toast.Body>
+          </Toast>
+          <Toast show={loginToast} style={{ backgroundColor: '#ed3511' }}>
+            <Toast.Body>Please login to add item to cart.</Toast.Body>
           </Toast>
           <ListGroup variant='flush'>
             <ListGroup.Item>
