@@ -25,7 +25,7 @@ export const getProducts =
       let link = `https://fast-sands-24063.herokuapp.com/api/products?keyword=${keyword}&page=${currentPage}&ratings[gte]=${ratings}`;
 
       if (category) {
-        link = `/api/products?keyword=${keyword}&page=${currentPage}&category=${category}&ratings[gte]=${ratings}`;
+        link = `https://fast-sands-24063.herokuapp.com/api/products?keyword=${keyword}&page=${currentPage}&category=${category}&ratings[gte]=${ratings}`;
       }
 
       const { data } = await axios.get(link);
