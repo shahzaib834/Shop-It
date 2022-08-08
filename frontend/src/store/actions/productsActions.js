@@ -22,10 +22,10 @@ export const getProducts =
     try {
       dispatch({ type: ALL_PRODUCTS_REQUEST });
 
-      let link = `https://fast-sands-24063.herokuapp.com/api/products?keyword=${keyword}&page=${currentPage}&ratings[gte]=${ratings}`;
+      let link = `https://shopitapp8.herokuapp.com/api/products?keyword=${keyword}&page=${currentPage}&ratings[gte]=${ratings}`;
 
       if (category) {
-        link = `https://fast-sands-24063.herokuapp.com/api/products?keyword=${keyword}&page=${currentPage}&category=${category}&ratings[gte]=${ratings}`;
+        link = `https://shopitapp8.herokuapp.com/api/products?keyword=${keyword}&page=${currentPage}&category=${category}&ratings[gte]=${ratings}`;
       }
 
       const { data } = await axios.get(link);

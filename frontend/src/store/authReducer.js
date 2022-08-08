@@ -16,7 +16,7 @@ export const login = createAsyncThunk('user/login', async (email, password) => {
       },
     };
     const { data } = await axios.post(
-      '/api/users/login',
+      'https://shopitapp8.herokuapp.com/api/users/login',
       { email, password },
       config
     );
@@ -58,7 +58,9 @@ export const logOut = createAsyncThunk('user/logout', async () => {
 
 export const loadUser = createAsyncThunk('user/loadUser', async () => {
   try {
-    const { data } = await axios.get(`/api/users/me`);
+    const { data } = await axios.get(
+      `https://shopitapp8.herokuapp.com/api/users/me`
+    );
 
     return data;
   } catch (err) {

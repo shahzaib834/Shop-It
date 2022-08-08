@@ -12,13 +12,14 @@ export const fetchProducts = createAsyncThunk(
     ratings = 0
   ) => {
     try {
-      let link = `https://fast-sands-24063.herokuapp.com/api/products?keyword=${keyword}&page=${currentPage}&ratings[gte]=${ratings}`;
+      let link = `https://shopitapp8.herokuapp.com/api/products?keyword=${keyword}&page=${currentPage}&ratings[gte]=${ratings}`;
 
       if (category) {
-        link = `https://fast-sands-24063.herokuapp.com/api/products?keyword=${keyword}&page=${currentPage}&category=${category}&ratings[gte]=${ratings}`;
+        link = `https://shopitapp8.herokuapp.com/api/products?keyword=${keyword}&page=${currentPage}&category=${category}&ratings[gte]=${ratings}`;
       }
 
       const { data } = await axios.get(link);
+      console.log(data);
       // price[lte]=${minPrice}&price[gte]=${maxPrice}   price filter for later
 
       return data;

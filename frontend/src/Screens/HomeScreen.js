@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Product from '../components/Product';
-import { Row, Col, InputGroup, Form, Card } from 'react-bootstrap';
+import { Row, Col, InputGroup, Form, Card, Button } from 'react-bootstrap';
 import Pagination from 'react-js-pagination';
 
 import { useParams } from 'react-router-dom';
