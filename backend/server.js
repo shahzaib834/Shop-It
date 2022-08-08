@@ -34,6 +34,10 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('/frontend/build'));
+}
+
 PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(
